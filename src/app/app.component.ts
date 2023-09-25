@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CdkDragMove } from '@angular/cdk/drag-drop';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
