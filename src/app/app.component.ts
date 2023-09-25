@@ -16,10 +16,6 @@ export class AppComponent {
     return this.resizeBox.nativeElement;
   }
 
-  get dragHandleCornerElement(): HTMLElement {
-    return this.dragHandleCorner.nativeElement;
-  }
-
   get dragHandleRightElement(): HTMLElement {
     return this.dragHandleRight.nativeElement;
   }
@@ -36,31 +32,19 @@ export class AppComponent {
 
   setAllHandleTransform() {
     const rect = this.resizeBoxElement.getBoundingClientRect();
-    this.setHandleTransform(this.dragHandleCornerElement, rect, 'both');
-    this.setHandleTransform(this.dragHandleRightElement, rect, 'x');
-    this.setHandleTransform(this.dragHandleBottomElement, rect, 'y');
+
+    this.setHandleTransform(this.dragHandleRightElement, rect);
   }
 
   setHandleTransform(
     dragHandle: HTMLElement,
-    targetRect: ClientRect | DOMRect,
-    position: 'x' | 'y' | 'both'
+    targetRect: ClientRect | DOMRect
   ) {
     const dragRect = dragHandle.getBoundingClientRect();
     const translateX = targetRect.width - dragRect.width;
     const translateY = targetRect.height - dragRect.height;
 
-    if (position === 'x') {
-      dragHandle.style.transform = `translate(${translateX}px, 0)`;
-    }
-
-    if (position === 'y') {
-      dragHandle.style.transform = `translate(0, ${translateY}px)`;
-    }
-
-    if (position === 'both') {
-      dragHandle.style.transform = `translate(${translateX}px, ${translateY}px)`;
-    }
+    dragHandle.style.transform = `translate(${translateX}px, 0)`;
   }
 
   dragMove(dragHandle: HTMLElement, $event: CdkDragMove<any>) {
@@ -74,10 +58,8 @@ export class AppComponent {
     const targetRect = target.getBoundingClientRect();
 
     const width = dragRect.left - targetRect.left + dragRect.width;
-    const height = dragRect.top - targetRect.top + dragRect.height;
 
     target.style.width = width + 'px';
-    target.style.height = height + 'px';
 
     this.setAllHandleTransform();
   }
