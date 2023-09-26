@@ -8,9 +8,7 @@ import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 })
 export class AppComponent {
   @ViewChild('resizeBox') resizeBox: ElementRef;
-  @ViewChild('dragHandleCorner') dragHandleCorner: ElementRef;
   @ViewChild('dragHandleRight') dragHandleRight: ElementRef;
-  @ViewChild('dragHandleBottom') dragHandleBottom: ElementRef;
 
   get resizeBoxElement(): HTMLElement {
     return this.resizeBox.nativeElement;
@@ -18,10 +16,6 @@ export class AppComponent {
 
   get dragHandleRightElement(): HTMLElement {
     return this.dragHandleRight.nativeElement;
-  }
-
-  get dragHandleBottomElement(): HTMLElement {
-    return this.dragHandleBottom.nativeElement;
   }
 
   constructor(private ngZone: NgZone) {}
@@ -42,7 +36,6 @@ export class AppComponent {
   ) {
     const dragRect = dragHandle.getBoundingClientRect();
     const translateX = targetRect.width - dragRect.width;
-    const translateY = targetRect.height - dragRect.height;
 
     dragHandle.style.transform = `translate(${translateX}px, 0)`;
   }
@@ -58,6 +51,8 @@ export class AppComponent {
     const targetRect = target.getBoundingClientRect();
 
     const width = dragRect.left - targetRect.left + dragRect.width;
+
+    console.log(width);
 
     target.style.width = width + 'px';
 
